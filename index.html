@@ -465,9 +465,13 @@
 
     <script>
         document.querySelectorAll('video').forEach(v => {
-            v.playbackRate = 5;
-            v.parentElement.addEventListener('mouseenter', () => { v.playbackRate = 5; v.play(); });
-            v.parentElement.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
+            v.playbackRate = 1;
+        });
+
+        document.querySelectorAll('.video-item video').forEach(v => {
+            const card = v.closest('.video-item');
+            card.addEventListener('mouseenter', () => { v.playbackRate = 1; v.play(); });
+            card.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
         });
     </script>
 
