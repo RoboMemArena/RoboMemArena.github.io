@@ -464,13 +464,19 @@
     </footer>
 
     <script>
+        const TASK_VIDEO_RATE = 1.75;
+
         document.querySelectorAll('video').forEach(v => {
             v.playbackRate = 1;
         });
 
         document.querySelectorAll('.video-item video').forEach(v => {
+            v.playbackRate = TASK_VIDEO_RATE;
             const card = v.closest('.video-item');
-            card.addEventListener('mouseenter', () => { v.playbackRate = 1; v.play(); });
+            card.addEventListener('mouseenter', () => {
+                v.playbackRate = TASK_VIDEO_RATE;
+                v.play();
+            });
             card.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
         });
     </script>
