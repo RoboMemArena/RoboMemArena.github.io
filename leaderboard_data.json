@@ -1,9 +1,9 @@
 {
   "benchmark": "RoboMemArena Task1-26",
-  "updated_at": "2026-05-20",
+  "updated_at": "2026-05-27",
   "entries": [
     {
-      "method": "PrediMem (Ours)",
+      "method": "PrediMem",
       "model_size": "Qwen3-VL-8B",
       "vlm": "Qwen3-VL-8B-Instruct",
       "vla": "π0.5",
@@ -19,7 +19,26 @@
       "sequence_tsr": 72.5,
       "sequence_csr": 89.5,
       "run_date": "Paper",
-      "notes": "Our dual-system memory baseline with keyframe bank and predictive coding."
+      "notes": "Dual-system memory baseline with keyframe bank and predictive coding."
+    },
+    {
+      "method": "π0.5",
+      "model_size": "",
+      "vlm": "-",
+      "vla": "π0.5",
+      "protocol": "Simulation",
+      "overall_tsr": 21.5,
+      "overall_csr": 38.7,
+      "transfer_tsr": 20.0,
+      "transfer_csr": 42.8,
+      "occlusion_tsr": 12.7,
+      "occlusion_csr": 17.2,
+      "counting_tsr": 14.3,
+      "counting_csr": 50.9,
+      "sequence_tsr": 60.0,
+      "sequence_csr": 71.6,
+      "run_date": "Paper",
+      "notes": "Reactive VLA baseline."
     },
     {
       "method": "MemER*",
