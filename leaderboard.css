@@ -284,6 +284,30 @@ tbody tr:hover {
   padding: 4px 8px;
 }
 
+.affiliation-cell {
+  text-align: center;
+}
+
+.affiliation-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(8, 18, 43, 0.06);
+}
+
+.affiliation-logo img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
 .realworld {
   padding: 18px;
 }

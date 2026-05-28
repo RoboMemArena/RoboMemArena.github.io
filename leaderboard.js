@@ -15,6 +15,26 @@ function containsAny(haystack, needle) {
   return haystack.toLowerCase().includes(needle.toLowerCase());
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function renderAffiliation(row) {
+  const name = escapeHtml(row.affiliation || "Affiliation");
+  const logo = escapeHtml(row.affiliation_logo || "");
+  if (!logo) return `<span class="muted">-</span>`;
+  return `
+    <span class="affiliation-logo" title="${name}" aria-label="${name}">
+      <img src="${logo}" alt="">
+    </span>
+  `;
+}
+
 function renderTable(rows) {
   const tbody = document.querySelector("#leaderboardTable tbody");
   tbody.innerHTML = "";
@@ -23,7 +43,7 @@ function renderTable(rows) {
     tr.innerHTML = `
       <td><span class="rank-chip">${idx + 1}</span></td>
       <td><div class="num-strong">${r.method}</div><div class="muted">${r.model_size || ""}</div></td>
-      <td>${r.affiliation || "-"}</td>
+      <td class="affiliation-cell">${renderAffiliation(r)}</td>
       <td>${r.vlm}</td>
       <td>${r.vla}</td>
       <td class="num-strong">${r.overall_tsr.toFixed(1)}</td>
