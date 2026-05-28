@@ -248,7 +248,7 @@ input:focus {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1050px;
+  min-width: 1120px;
 }
 
 thead th {
@@ -295,7 +295,7 @@ tbody tr:hover {
 }
 
 .realworld-table {
-  min-width: 860px;
+  min-width: 980px;
 }
 
 .realworld-table td,

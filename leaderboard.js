@@ -23,6 +23,7 @@ function renderTable(rows) {
     tr.innerHTML = `
       <td><span class="rank-chip">${idx + 1}</span></td>
       <td><div class="num-strong">${r.method}</div><div class="muted">${r.model_size || ""}</div></td>
+      <td>${r.affiliation || "-"}</td>
       <td>${r.vlm}</td>
       <td>${r.vla}</td>
       <td class="num-strong">${r.overall_tsr.toFixed(1)}</td>
@@ -46,7 +47,7 @@ function applyState(allRows) {
   let rows = allRows.filter((r) => protocol === "all" || r.protocol === protocol);
   rows = rows.filter((r) =>
     containsAny(
-      [r.method, r.vlm, r.vla, r.notes, r.protocol].join(" "),
+      [r.method, r.affiliation, r.vlm, r.vla, r.notes, r.protocol].join(" "),
       query
     )
   );
@@ -83,7 +84,7 @@ async function main() {
     applyState(rows);
   } catch (err) {
     const tbody = document.querySelector("#leaderboardTable tbody");
-    tbody.innerHTML = `<tr><td colspan="12">Failed to load leaderboard data: ${err.message}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="13">Failed to load leaderboard data: ${err.message}</td></tr>`;
   }
 }
 
