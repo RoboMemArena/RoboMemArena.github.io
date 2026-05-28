@@ -176,6 +176,35 @@ main {
   margin-bottom: 14px;
 }
 
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.section-kicker {
+  margin: 0 0 4px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-family: "Outfit", sans-serif;
+  font-size: 24px;
+}
+
+.section-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .controls {
   display: grid;
   grid-template-columns: repeat(3, minmax(180px, 1fr));
@@ -255,6 +284,55 @@ tbody tr:hover {
   padding: 4px 8px;
 }
 
+.realworld {
+  padding: 18px;
+}
+
+.realworld-table-wrap {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.realworld-table {
+  min-width: 860px;
+}
+
+.realworld-table td,
+.realworld-table th {
+  text-align: center;
+}
+
+.realworld-table td:first-child,
+.realworld-table th:first-child {
+  text-align: left;
+}
+
+.highlight-row {
+  background: #f4f8ff;
+}
+
+.highlight-row:hover {
+  background: #edf4ff;
+}
+
+.contact-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.contact-note a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.contact-note a:hover {
+  text-decoration: underline;
+}
+
 .num-strong {
   font-weight: 700;
 }
@@ -309,5 +387,10 @@ footer {
 
   .controls {
     grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
