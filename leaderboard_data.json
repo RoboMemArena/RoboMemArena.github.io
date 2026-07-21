@@ -1,7 +1,27 @@
 {
   "benchmark": "RoboMemArena Task1-26",
-  "updated_at": "2026-05-28",
+  "updated_at": "2026-07-21",
   "entries": [
+    {
+      "method": "FrameSamp+Modul",
+      "model_size": "ckpt56000",
+      "affiliation": "RoboMME",
+      "vlm": "-",
+      "vla": "-",
+      "protocol": "Simulation",
+      "overall_tsr": 46.15,
+      "overall_csr": 63.93,
+      "transfer_tsr": 63.75,
+      "transfer_csr": 72.08,
+      "occlusion_tsr": 39.09,
+      "occlusion_csr": 56.48,
+      "counting_tsr": 31.43,
+      "counting_csr": 57.84,
+      "sequence_tsr": 73.75,
+      "sequence_csr": 86.88,
+      "run_date": "20 eps/task",
+      "notes": "Imported from RoboMME (FrameSamp+Modul), ckpt56000, evaluated on 20 episodes per task (seed 100-119)."
+    },
     {
       "method": "PrediMem",
       "model_size": "Qwen3-VL-8B",
