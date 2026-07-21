@@ -20,7 +20,7 @@
       "sequence_tsr": 73.75,
       "sequence_csr": 86.88,
       "run_date": "RoboMME",
-      "notes": "Imported from RoboMME (FrameSamp+Modul), ckpt56000."
+      "notes": ""
     },
     {
       "method": "PrediMem",
