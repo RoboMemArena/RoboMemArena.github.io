@@ -19,8 +19,8 @@
       "counting_csr": 57.84,
       "sequence_tsr": 73.75,
       "sequence_csr": 86.88,
-      "run_date": "20 eps/task",
-      "notes": "Imported from RoboMME (FrameSamp+Modul), ckpt56000, evaluated on 20 episodes per task (seed 100-119)."
+      "run_date": "RoboMME",
+      "notes": "Imported from RoboMME (FrameSamp+Modul), ckpt56000."
     },
     {
       "method": "PrediMem",
