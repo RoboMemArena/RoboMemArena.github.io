@@ -18,33 +18,33 @@
         <h1>Leaderboard</h1>
         <div class="leaderboard-tabs" role="tablist" aria-label="Leaderboard verification status">
           <button
-            id="verifiedTab"
-            class="leaderboard-tab leaderboard-tab-verified is-active"
+            id="unverifiedTab"
+            class="leaderboard-tab leaderboard-tab-unverified is-active"
             type="button"
             role="tab"
             aria-selected="true"
-            aria-controls="verifiedBoard"
-            data-board="verified"
-          >
-            <span>Verified Leaderboard</span>
-            <small>Official results</small>
-          </button>
-          <button
-            id="unverifiedTab"
-            class="leaderboard-tab leaderboard-tab-unverified"
-            type="button"
-            role="tab"
-            aria-selected="false"
             aria-controls="unverifiedBoard"
             data-board="unverified"
           >
             <span>Unverified Leaderboard</span>
             <small>Literature-reported</small>
           </button>
+          <button
+            id="verifiedTab"
+            class="leaderboard-tab leaderboard-tab-verified"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="verifiedBoard"
+            data-board="verified"
+          >
+            <span>Verified Leaderboard</span>
+            <small>Official results</small>
+          </button>
         </div>
       </div>
       <p class="subtitle" id="leaderboardSubtitle">
-        Task1-26 benchmark ranking with sortable CSR/TSR and category breakdown.
+        Literature-reported full 26-task results with transparent protocol and repository notes.
       </p>
       <div class="resource-links" aria-label="RoboMemArena resources">
         <a href="https://arxiv.org/abs/2605.10921" class="resource-pill resource-red" target="_blank" rel="noopener noreferrer">
@@ -84,7 +84,7 @@
   </header>
 
   <main class="container">
-    <div id="verifiedBoard" class="leaderboard-view" role="tabpanel" aria-labelledby="verifiedTab">
+    <div id="verifiedBoard" class="leaderboard-view" role="tabpanel" aria-labelledby="verifiedTab" hidden>
     <section class="panel controls">
       <div class="control">
         <label for="protocolSelect">Protocol</label>
@@ -208,7 +208,7 @@
     </section>
     </div>
 
-    <div id="unverifiedBoard" class="leaderboard-view" role="tabpanel" aria-labelledby="unverifiedTab" hidden>
+    <div id="unverifiedBoard" class="leaderboard-view" role="tabpanel" aria-labelledby="unverifiedTab">
       <section class="panel unverified-overview">
         <div class="section-heading">
           <div>

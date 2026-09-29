@@ -133,9 +133,9 @@ function escapeHtml(value) {
 }
 
 function boardFromLocation() {
-  return new URLSearchParams(window.location.search).get("bench") === "unverified"
-    ? "unverified"
-    : "verified";
+  return new URLSearchParams(window.location.search).get("bench") === "verified"
+    ? "verified"
+    : "unverified";
 }
 
 function setBoard(board, { updateUrl = true } = {}) {
@@ -154,8 +154,8 @@ function setBoard(board, { updateUrl = true } = {}) {
 
   if (updateUrl) {
     const url = new URL(window.location.href);
-    if (activeBoard === "unverified") {
-      url.searchParams.set("bench", "unverified");
+    if (activeBoard === "verified") {
+      url.searchParams.set("bench", "verified");
     } else {
       url.searchParams.delete("bench");
     }
