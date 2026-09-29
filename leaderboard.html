@@ -16,9 +16,34 @@
       <p class="kicker">RoboMemArena: A Comprehensive and Challenging Robotic Memory Benchmark</p>
       <div class="title-row">
         <h1>Leaderboard</h1>
-        <a class="leaderboard-switch" href="unverified_leaderboard.html">Unverified Leaderboard</a>
+        <div class="leaderboard-tabs" role="tablist" aria-label="Leaderboard verification status">
+          <button
+            id="verifiedTab"
+            class="leaderboard-tab leaderboard-tab-verified is-active"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="verifiedBoard"
+            data-board="verified"
+          >
+            <span>Verified Leaderboard</span>
+            <small>Official results</small>
+          </button>
+          <button
+            id="unverifiedTab"
+            class="leaderboard-tab leaderboard-tab-unverified"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="unverifiedBoard"
+            data-board="unverified"
+          >
+            <span>Unverified Leaderboard</span>
+            <small>Literature-reported</small>
+          </button>
+        </div>
       </div>
-      <p class="subtitle">
+      <p class="subtitle" id="leaderboardSubtitle">
         Task1-26 benchmark ranking with sortable CSR/TSR and category breakdown.
       </p>
       <div class="resource-links" aria-label="RoboMemArena resources">
@@ -59,6 +84,7 @@
   </header>
 
   <main class="container">
+    <div id="verifiedBoard" class="leaderboard-view" role="tabpanel" aria-labelledby="verifiedTab">
     <section class="panel controls">
       <div class="control">
         <label for="protocolSelect">Protocol</label>
@@ -180,6 +206,72 @@
       </ul>
       <p class="updated" id="updatedAt">Updated: -</p>
     </section>
+    </div>
+
+    <div id="unverifiedBoard" class="leaderboard-view" role="tabpanel" aria-labelledby="unverifiedTab" hidden>
+      <section class="panel unverified-overview">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker unverified-kicker">Literature-reported results</p>
+            <h2>Unverified Leaderboard</h2>
+          </div>
+          <p class="updated unverified-updated">Updated: 2026-09-29</p>
+        </div>
+        <p>
+          Full 26-task results aggregated from public literature. These entries have not been
+          independently verified by the RoboMemArena team, and evaluation protocols may differ.
+        </p>
+      </section>
+
+      <div class="unverified-metric-tabs" role="tablist" aria-label="Unverified leaderboard ranking metric">
+        <button class="unverified-metric-tab is-active" type="button" role="tab" aria-selected="true" data-unverified-metric="tsr">
+          TSR Leaderboard
+        </button>
+        <button class="unverified-metric-tab" type="button" role="tab" aria-selected="false" data-unverified-metric="csr">
+          CSR Leaderboard
+        </button>
+      </div>
+
+      <section class="panel unverified-table-panel">
+        <div class="unverified-section-head">
+          <h2 id="unverifiedRankingTitle">Ranked by TSR (%)</h2>
+          <p>Higher is better · GitHub is the last column</p>
+        </div>
+        <div class="table-wrap">
+          <table class="unverified-table">
+            <colgroup>
+              <col class="unverified-col-rank">
+              <col class="unverified-col-model">
+              <col class="unverified-col-score">
+              <col class="unverified-col-score">
+              <col class="unverified-col-notes">
+              <col class="unverified-col-repo">
+            </colgroup>
+            <thead>
+              <tr>
+                <th class="unverified-center">Rank</th>
+                <th>Model</th>
+                <th class="unverified-center" id="unverifiedTsrHeader">TSR (%)</th>
+                <th class="unverified-center" id="unverifiedCsrHeader">CSR (%)</th>
+                <th>Evaluation Notes</th>
+                <th class="unverified-center">GitHub Repo</th>
+              </tr>
+            </thead>
+            <tbody id="unverifiedTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="unverified-status-row" aria-label="Repository availability legend">
+        <span class="unverified-badge is-release">Public repo</span>
+        <span class="unverified-badge is-pending">Repo exists, code pending</span>
+        <span class="unverified-badge is-missing">No official public repo found</span>
+      </div>
+
+      <p class="unverified-footnote">
+        “MemER*” keeps the leaderboard’s matched-reimplementation score while linking to the original MemER repository.
+      </p>
+    </div>
   </main>
 
   <footer>
