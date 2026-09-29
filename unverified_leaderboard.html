@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RoboMemArena Unverified Leaderboard</title>
+<style>
+:root {
+  --bg:#f7f9fc;
+  --panel:#ffffff;
+  --text:#172033;
+  --muted:#667085;
+  --line:#dfe5ee;
+  --head:#f1f3f6;
+  --blue:#377cf6;
+  --blue-soft:#eef5ff;
+  --blue-cell:#f4f8ff;
+  --green:#178553;
+  --green-soft:#eaf7f0;
+  --amber:#9a6700;
+  --amber-soft:#fff7dd;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; padding:34px 30px 48px;
+  background:var(--bg); color:var(--text);
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",
+    Roboto,Helvetica,Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+}
+.wrap{max-width:1680px;margin:0 auto}
+.header{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:18px}
+.title-line{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.brand{font-size:44px;font-weight:850;letter-spacing:-1.6px;color:#111827}
+.title{font-size:29px;font-weight:720;color:#4f5969}
+.subtitle{margin-top:7px;font-size:18px;color:#667085;font-weight:520}
+.updated{font-size:16px;color:#7b8492;font-style:italic;font-weight:650;white-space:nowrap;margin-top:5px}
+.header-meta{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+.verified-link{
+  display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;
+  border:1px solid #2266db;border-radius:10px;background:var(--blue);color:#fff;
+  box-shadow:0 4px 12px rgba(55,124,246,.22);font-size:14px;font-weight:820;
+  text-decoration:none;white-space:nowrap;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.verified-link:hover{background:#2569df;transform:translateY(-1px);box-shadow:0 7px 16px rgba(55,124,246,.28)}
+.verified-link:focus-visible{outline:3px solid rgba(55,124,246,.28);outline-offset:3px}
+
+.tabs{display:flex;gap:10px;margin:18px 0 22px}
+.tab{
+  border:1px solid var(--line);background:#fff;color:#687386;
+  border-radius:11px;padding:10px 18px;font-size:14px;font-weight:800;
+  cursor:pointer;letter-spacing:.4px;
+}
+.tab.active{background:var(--blue-soft);border-color:#bed5ff;color:var(--blue)}
+
+.panel{display:none}
+.panel.active{display:block}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.section-title{font-size:18px;font-weight:820;color:#2b3443}
+.section-note{font-size:13px;color:#7d8795}
+
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  box-shadow:0 1px 3px rgba(16,24,40,.04);
+}
+table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}
+thead th{
+  background:var(--head);color:#7a8494;text-transform:uppercase;
+  letter-spacing:1.55px;font-size:12px;font-weight:850;
+  padding:16px 14px;border-bottom:1px solid var(--line);text-align:left;
+}
+thead th.center, td.center{text-align:center}
+thead th.metric-active{background:#e7f1ff;color:var(--blue)}
+tbody tr:nth-child(odd){background:#fbfcfd}
+tbody tr:nth-child(even){background:#fff}
+tbody tr:first-child{background:#f0f6ff}
+tbody td{
+  padding:15px 14px;border-bottom:1px solid var(--line);
+  vertical-align:middle;font-size:15px;line-height:1.2;
+}
+tbody tr:last-child td{border-bottom:0}
+.rank{text-align:center;font-weight:800}
+.rank-num{display:inline-block;min-width:28px}
+.model{font-weight:790;font-size:18px;color:#202837}
+.metric{text-align:center;font-variant-numeric:tabular-nums;font-size:18px;font-weight:600}
+.active-metric{background:var(--blue-cell)}
+.metric.best{color:var(--blue);font-weight:850}
+.note{color:#526071;font-size:15px}
+.repo{text-align:center}
+.repo-link{
+  display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
+  text-decoration:none;color:#176f47;background:var(--green-soft);border:1px solid #c9ead8;
+  border-radius:8px;padding:7px 10px;font-size:12px;font-weight:820;
+}
+.repo-link:hover{filter:brightness(.98);transform:translateY(-1px)}
+.repo-link.pending{color:var(--amber);background:var(--amber-soft);border-color:#efd78a}
+.repo-missing{
+  display:inline-flex;white-space:nowrap;color:#8b94a3;background:#f1f3f6;
+  border:1px solid #e0e4ea;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:760;
+}
+
+.medal{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:29px;height:29px;border-radius:50%;color:white;font-size:13px;font-weight:900;
+  position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);
+}
+.medal:before,.medal:after{
+  content:"";position:absolute;top:-7px;width:7px;height:10px;z-index:-1;
+  background:linear-gradient(90deg,#ef4444 0 33%,#fff 33% 66%,#2563eb 66%);
+}
+.medal:before{left:5px;transform:rotate(-13deg)}
+.medal:after{right:5px;transform:rotate(13deg)}
+.gold{background:linear-gradient(#ffd94d,#e7a800)}
+.silver{background:linear-gradient(#d8dde4,#9ca5b1)}
+.bronze{background:linear-gradient(#dc9155,#9c5428)}
+
+.footer{
+  margin-top:14px;padding:0 4px;color:#7a8492;font-size:12.5px;line-height:1.6;text-align:center;
+}
+.status-row{
+  margin:14px 2px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  font-size:12px;color:#758090
+}
+.badge{border-radius:999px;padding:5px 9px;font-weight:760}
+.badge.release{background:var(--green-soft);color:var(--green)}
+.badge.pending{background:var(--amber-soft);color:var(--amber)}
+.badge.missing{background:#eef0f3;color:#7b8492}
+
+@media(max-width:1150px){
+  body{padding:22px 14px}
+  .header{flex-direction:column}
+  .header-meta{justify-content:flex-start}
+  .brand{font-size:34px} .title{font-size:23px}
+  .subtitle{font-size:16px}
+  .card{overflow-x:auto}
+  table{min-width:1180px}
+}
+@media print{
+  body{background:#fff;padding:15px}
+  .tabs{display:none}
+  .panel{display:block!important;margin-bottom:28px;page-break-inside:avoid}
+  .header{margin-bottom:12px}
+  .card{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div>
+      <div class="title-line">
+        <div class="brand">RoboMemArena</div>
+        <div class="title">Unverified Leaderboard</div>
+      </div>
+      <div class="subtitle">Literature-reported full 26-task results · 13 methods · GitHub repository links added</div>
+    </div>
+    <div class="header-meta">
+      <a class="verified-link" href="leaderboard.html">Verified Leaderboard</a>
+      <div class="updated">Updated: 2026-09-29</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showPanel('tsr', this)">TSR Leaderboard</button>
+    <button class="tab" onclick="showPanel('csr', this)">CSR Leaderboard</button>
+  </div>
+
+  <section id="panel-tsr" class="panel active">
+    <div class="section-head">
+      <div class="section-title">Ranked by TSR (%)</div>
+      <div class="section-note">Higher is better · GitHub is the last column</div>
+    </div>
+    <div class="card">
+      <table>
+        <colgroup>
+          <col style="width:7%">
+          <col style="width:22%">
+          <col style="width:11%">
+          <col style="width:11%">
+          <col style="width:32%">
+          <col style="width:17%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="center">Rank</th>
+            <th>Model</th>
+            <th class="center metric-active">TSR (%) ↓</th>
+            <th class="center">CSR (%)</th>
+            <th>Evaluation Notes</th>
+            <th class="center">GitHub Repo</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td class="rank"><span class="medal gold">1</span></td>
+            <td class="model">SimpleMemVLA</td>
+            <td class="metric active-metric best">63.60</td>
+            <td class="metric">72.10</td>
+            <td class="note">26×51, official-style protocol</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/OpenBMB/SimpleMemVLA" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="medal silver">2</span></td>
+            <td class="model">HarnessWAM</td>
+            <td class="metric active-metric">59.60</td>
+            <td class="metric">69.90</td>
+            <td class="note">26 tasks, 20 rollouts/task</td>
+            <td class="repo"><span class="repo-missing">Not released</span></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="medal bronze">3</span></td>
+            <td class="model">BATON</td>
+            <td class="metric active-metric">57.70</td>
+            <td class="metric best">78.80</td>
+            <td class="note">explore s50, eval s51–52</td>
+            <td class="repo"><span class="repo-missing">Not released</span></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">4</span></td>
+            <td class="model">RoboFoundry</td>
+            <td class="metric active-metric">53.50</td>
+            <td class="metric">72.80</td>
+            <td class="note">official protocol; Qwen3.7-Plus</td>
+            <td class="repo"><a class="repo-link pending" href="https://github.com/robofoundry2026/RoboFoundry" target="_blank" rel="noopener noreferrer">GitHub · code pending ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">5</span></td>
+            <td class="model">FrameSamp+Modul</td>
+            <td class="metric active-metric">46.15</td>
+            <td class="metric">63.93</td>
+            <td class="note">26×20, seeds 100–119</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/RoboMME/robomme_policy_learning" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">6</span></td>
+            <td class="model">TaskAnchor</td>
+            <td class="metric active-metric">44.40</td>
+            <td class="metric">60.50</td>
+            <td class="note">full 26, standard protocol</td>
+            <td class="repo"><span class="repo-missing">Not released</span></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">7</span></td>
+            <td class="model">PrediMem</td>
+            <td class="metric active-metric">38.50</td>
+            <td class="metric">55.20</td>
+            <td class="note">benchmark paper result</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/OpenHelix-Team/RoboMemArena" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">8</span></td>
+            <td class="model">TraceFlow</td>
+            <td class="metric active-metric">34.99</td>
+            <td class="metric">55.04</td>
+            <td class="note">26×51, suite-conditioned</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/zhangjiaxuan-Xuan/TraceFlow" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">9</span></td>
+            <td class="model">MemER*</td>
+            <td class="metric active-metric">27.30</td>
+            <td class="metric">49.10</td>
+            <td class="note">matched reimplementation</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/memer-policy/memer" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">10</span></td>
+            <td class="model">StateMem</td>
+            <td class="metric active-metric">26.80</td>
+            <td class="metric">44.40</td>
+            <td class="note">26×50 independent seeds</td>
+            <td class="repo"><span class="repo-missing">Not released</span></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">11</span></td>
+            <td class="model">π0.5</td>
+            <td class="metric active-metric">21.50</td>
+            <td class="metric">38.70</td>
+            <td class="note">benchmark baseline</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/Physical-Intelligence/openpi" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">12</span></td>
+            <td class="model">HiF-VLA</td>
+            <td class="metric active-metric">16.90</td>
+            <td class="metric">39.80</td>
+            <td class="note">benchmark baseline</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/OpenHelix-Team/HiF-VLA" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">13</span></td>
+            <td class="model">MemoryVLA</td>
+            <td class="metric active-metric">15.00</td>
+            <td class="metric">35.30</td>
+            <td class="note">benchmark baseline</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/shihao1895/MemoryVLA" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="panel-csr" class="panel">
+    <div class="section-head">
+      <div class="section-title">Ranked by CSR (%)</div>
+      <div class="section-note">Higher is better · GitHub is the last column</div>
+    </div>
+    <div class="card">
+      <table>
+        <colgroup>
+          <col style="width:7%">
+          <col style="width:22%">
+          <col style="width:11%">
+          <col style="width:11%">
+          <col style="width:32%">
+          <col style="width:17%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="center">Rank</th>
+            <th>Model</th>
+            <th class="center">TSR (%)</th>
+            <th class="center metric-active">CSR (%) ↓</th>
+            <th>Evaluation Notes</th>
+            <th class="center">GitHub Repo</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td class="rank"><span class="medal gold">1</span></td>
+            <td class="model">BATON</td>
+            <td class="metric">57.70</td>
+            <td class="metric active-metric best">78.80</td>
+            <td class="note">explore s50, eval s51–52</td>
+            <td class="repo"><span class="repo-missing">Not released</span></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="medal silver">2</span></td>
+            <td class="model">RoboFoundry</td>
+            <td class="metric">53.50</td>
+            <td class="metric active-metric">72.80</td>
+            <td class="note">official protocol; Qwen3.7-Plus</td>
+            <td class="repo"><a class="repo-link pending" href="https://github.com/robofoundry2026/RoboFoundry" target="_blank" rel="noopener noreferrer">GitHub · code pending ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="medal bronze">3</span></td>
+            <td class="model">SimpleMemVLA</td>
+            <td class="metric best">63.60</td>
+            <td class="metric active-metric">72.10</td>
+            <td class="note">26×51, official-style protocol</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/OpenBMB/SimpleMemVLA" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">4</span></td>
+            <td class="model">HarnessWAM</td>
+            <td class="metric">59.60</td>
+            <td class="metric active-metric">69.90</td>
+            <td class="note">26 tasks, 20 rollouts/task</td>
+            <td class="repo"><span class="repo-missing">Not released</span></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">5</span></td>
+            <td class="model">FrameSamp+Modul</td>
+            <td class="metric">46.15</td>
+            <td class="metric active-metric">63.93</td>
+            <td class="note">26×20, seeds 100–119</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/RoboMME/robomme_policy_learning" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">6</span></td>
+            <td class="model">TaskAnchor</td>
+            <td class="metric">44.40</td>
+            <td class="metric active-metric">60.50</td>
+            <td class="note">full 26, standard protocol</td>
+            <td class="repo"><span class="repo-missing">Not released</span></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">7</span></td>
+            <td class="model">PrediMem</td>
+            <td class="metric">38.50</td>
+            <td class="metric active-metric">55.20</td>
+            <td class="note">benchmark paper result</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/OpenHelix-Team/RoboMemArena" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">8</span></td>
+            <td class="model">TraceFlow</td>
+            <td class="metric">34.99</td>
+            <td class="metric active-metric">55.04</td>
+            <td class="note">26×51, suite-conditioned</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/zhangjiaxuan-Xuan/TraceFlow" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">9</span></td>
+            <td class="model">MemER*</td>
+            <td class="metric">27.30</td>
+            <td class="metric active-metric">49.10</td>
+            <td class="note">matched reimplementation</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/memer-policy/memer" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">10</span></td>
+            <td class="model">StateMem</td>
+            <td class="metric">26.80</td>
+            <td class="metric active-metric">44.40</td>
+            <td class="note">26×50 independent seeds</td>
+            <td class="repo"><span class="repo-missing">Not released</span></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">11</span></td>
+            <td class="model">HiF-VLA</td>
+            <td class="metric">16.90</td>
+            <td class="metric active-metric">39.80</td>
+            <td class="note">benchmark baseline</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/OpenHelix-Team/HiF-VLA" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">12</span></td>
+            <td class="model">π0.5</td>
+            <td class="metric">21.50</td>
+            <td class="metric active-metric">38.70</td>
+            <td class="note">benchmark baseline</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/Physical-Intelligence/openpi" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+
+          <tr>
+            <td class="rank"><span class="rank-num">13</span></td>
+            <td class="model">MemoryVLA</td>
+            <td class="metric">15.00</td>
+            <td class="metric active-metric">35.30</td>
+            <td class="note">benchmark baseline</td>
+            <td class="repo"><a class="repo-link" href="https://github.com/shihao1895/MemoryVLA" target="_blank" rel="noopener noreferrer">GitHub ↗</a></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="status-row">
+    <span class="badge release">Public repo</span>
+    <span class="badge pending">Repo exists, code pending</span>
+    <span class="badge missing">No official public repo found</span>
+  </div>
+
+  <div class="footer">
+    Unverified = aggregated from literature reports, not an official RoboMemArena ranking.
+    Protocols differ across works. Repository availability was checked on 2026-09-29.
+    “MemER*” keeps the leaderboard’s matched-reimplementation score while linking to the original MemER repository.
+  </div>
+</div>
+
+<script>
+function showPanel(which, btn){
+  document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  document.getElementById('panel-' + which).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
