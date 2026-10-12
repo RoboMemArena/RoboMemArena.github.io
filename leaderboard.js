@@ -47,9 +47,9 @@ const UNVERIFIED_ROWS = [
   },
   {
     method: "TaskAnchor",
-    tsr: 44.4,
-    csr: 60.5,
-    notes: "full 26, standard protocol",
+    tsr: 50.0,
+    csr: 74.21,
+    notes: "full 26, latest training data and evaluation protocol",
     repoStatus: "missing",
   },
   {
