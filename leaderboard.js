@@ -8,6 +8,14 @@ async function loadData() {
 
 const UNVERIFIED_ROWS = [
   {
+    method: "Astra (Codex)",
+    tsr: 67.3076923076923,
+    csr: 85.45833333333333,
+    notes: "",
+    repoStatus: "public",
+    repoUrl: "https://github.com/OpenHelix-Team/RoboMemArena/tree/main/baselines/astra_codex",
+  },
+  {
     method: "SimpleMemVLA",
     tsr: 63.6,
     csr: 72.1,
@@ -111,7 +119,7 @@ const UNVERIFIED_ROWS = [
 
 const BOARD_COPY = {
   verified: "Task1-26 benchmark ranking with sortable CSR/TSR and category breakdown.",
-  unverified: "Literature-reported full 26-task results with transparent protocol and repository notes.",
+  unverified: "Publicly reported full 26-task results with source and repository links.",
 };
 
 function num(v) {
