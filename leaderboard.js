@@ -8,6 +8,22 @@ async function loadData() {
 
 const UNVERIFIED_ROWS = [
   {
+    method: "Code-as-Memory w/ rollouts",
+    tsr: 97.76923076923077,
+    csr: 98.15384615384616,
+    notes: "26×50, 50 demos+rollouts/task; no training; no API call during inference; frozen code",
+    repoStatus: "public",
+    repoUrl: "https://github.com/YinpeiDai/Code-as-Memory",
+  },
+  {
+    method: "Code-as-Memory",
+    tsr: 90.6923076923077,
+    csr: 94.33589743589744,
+    notes: "26×50, 50 demos/task, no training; no API call during inference; frozen code",
+    repoStatus: "public",
+    repoUrl: "https://github.com/YinpeiDai/Code-as-Memory",
+  },
+  {
     method: "Astra (Codex)",
     tsr: 67.3076923076923,
     csr: 85.45833333333333,
