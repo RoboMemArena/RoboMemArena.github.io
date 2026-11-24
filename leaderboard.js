@@ -8,6 +8,14 @@ async function loadData() {
 
 const UNVERIFIED_ROWS = [
   {
+    method: "ActMem",
+    tsr: 71.1,
+    csr: 80.8,
+    notes: "Beihang University / Beta Infinity; 26 tasks × 51 trials, seeds starting at 50; arXiv:2611.25461v1, Table 1",
+    repoStatus: "pending",
+    repoUrl: "https://github.com/LigphiDonk/ActMem",
+  },
+  {
     method: "Astra (Codex)",
     tsr: 67.3076923076923,
     csr: 85.45833333333333,
